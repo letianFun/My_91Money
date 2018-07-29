@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="91Money_AdminWeb" />
+        <module name="91Money_AutoCreate" />
+        <module name="91Money_Controller" />
+        <module name="91Money_Core" />
+        <module name="91Money_Domain" />
+        <module name="91Money_Mapper" />
+        <module name="91Money_Provider" />
+        <module name="91Money_Servcie" />
+        <module name="91Money_SSOController" />
+        <module name="91Money_SSOService" />
+        <module name="91Money_SSOServieProvider" />
+        <module name="91Money_UiController" />
+        <module name="91Money_UiWeb" />
+        <module name="SSO_Sys1" />
+        <module name="SSO_Sys2" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="_91Money_Core" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

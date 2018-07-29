@@ -1,0 +1,27 @@
+package com.qfedu.mapper.user;
+
+import com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail;
+import com.qfedu.domain.user.UserDetailExample;
+import com.qfedu.domain.user.UserDetailWithBLOBs;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UserDetailMapper {
+    long countByExample(UserDetailExample example);
+
+    int deleteByExample(UserDetailExample example);
+
+    int insert(UserDetailWithBLOBs record);
+
+    int insertSelective(UserDetailWithBLOBs record);
+
+    List<UserDetailWithBLOBs> selectByExampleWithBLOBs(UserDetailExample example);
+
+    List<com.qfedu.domain.userdetail.UserDetail> selectByExample(UserDetailExample example);
+
+    int updateByExampleSelective(@Param("record") UserDetailWithBLOBs record, @Param("example") UserDetailExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") UserDetailWithBLOBs record, @Param("example") UserDetailExample example);
+
+    int updateByExample(@Param("record") com.qfedu.domain.userdetail.UserDetail record, @Param("example") UserDetailExample example);
+}

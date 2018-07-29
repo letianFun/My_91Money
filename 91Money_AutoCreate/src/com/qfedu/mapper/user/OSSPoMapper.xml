@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.mapper.user.OSSPoMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.user.com.qfedu.domain.osspo.OSSPo">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="objname" jdbcType="VARCHAR" property="objname" />
+    <result column="period" jdbcType="BIGINT" property="period" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qfedu.domain.user.com.qfedu.domain.osspo.OSSPo">
+    <result column="ourl" jdbcType="LONGVARCHAR" property="ourl" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    ourl
+  </sql>
+  <insert id="insert" parameterType="com.qfedu.domain.user.com.qfedu.domain.osspo.OSSPo">
+    insert into t_oss (id, objname, period, 
+      createtime, ourl)
+    values (#{id,jdbcType=INTEGER}, #{objname,jdbcType=VARCHAR}, #{period,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{ourl,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.domain.user.com.qfedu.domain.osspo.OSSPo">
+    insert into t_oss
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="objname != null">
+        objname,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="ourl != null">
+        ourl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="objname != null">
+        #{objname,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ourl != null">
+        #{ourl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

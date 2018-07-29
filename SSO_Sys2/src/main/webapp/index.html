@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OA主页</title>
+    <script src="jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<h1>欢迎</h1>
+<div id="div1">
+    <h1>--------------------欢迎来到SSO单点登录系统-----------------</h1>
+    <h1 id="username"></h1>
+    <h1 id="phone"></h1>
+    <h3><a href="javascript:loginout()">退出</a> </h3>
+</div>
+<script type="application/javascript">
+    $(function () {
+        var token = getCK("userauth");
+        if (token.length == 0){
+            //没有令牌
+            alert("没有令牌进行跳转");
+            location.href="login.html";
+        }else {
+            alert("有令牌发起请求检查");
+            $.ajax({
+                url:"http://localhost:8081/usercheck.do",
+                method:"get",
+                xhrFields: {withCredentials: true},
+                success:function (obj) {
+                    console.log("数据:" + obj);
+                    if (obj.code == 0){
+                        $("#username").html(obj.data.username);
+                        $("#phone").html(obj.data.phone);
+                    }else{
+                        alert("获取登录用户:" + obj.msg);
+                    }
+                }
+            })
+        }
+        loadData();
+    })
+    
+    //获取Cookie
+    function getCK(name) {
+       var cks1= document.cookie;
+       alert("缓存Cookie是：" + cks1);
+       var arrc1=cks1.split(";");
+        for (i = 0; i < arrc1.length; i++){
+            var ck1 = arrc1[i];
+            var arrc2=ck1.split("=");
+            alert("arrc2:" + arrc2[0]);
+            if (arrc2[0] == name){
+                return arrc2[1];
+            }
+        }
+        return "";
+    }
+    
+    function loadData() {
+        $.get("http://localhost:8081/users.do",null,function (arr) {
+            console.log("数组:" + arr);
+        })
+    }
+    function loginout() {
+        $.ajax({
+            url:"http://localhost:8081/loginout.do",
+            method:"get",
+            xhrFields:{withCredentials:true},
+            success:function (obj) {
+                if (obj.code == 0){
+                    location.href="login.html";
+                }
+                alert("------------->"+obj.msg + "----------->后端");
+
+
+            }
+        })
+    }
+</script>
+</body>
+</html>

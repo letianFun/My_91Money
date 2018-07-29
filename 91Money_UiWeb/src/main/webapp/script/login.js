@@ -1,0 +1,43 @@
+$(document).ready(function() {
+
+    $('#loginForm').validate({
+        debug:true,
+        rules:{
+            username: {
+                required: true
+            },
+            password: {
+                required: true
+            }
+        },
+        messages:{
+            username: {
+                required: '请输入用户名'
+            },
+            password: {
+                required: '请输入密码'
+            }
+        },
+        submitHandler:function(form){
+            alert("进入请求");
+            $(form).ajaxSubmit({
+                url:$("#loginForm").attr("action"),
+                method:$("#loginForm").attr("method"),
+                xhrFields: {withCredentials: true},
+                data:$("#loginForm").serialize(),
+                success:function (obj) {
+                    if(obj.code==0){
+                        location.href="index.html";
+                    }else{
+                        alert("登录失败");
+                    }
+                }
+            });
+        }
+    });
+});
+function changeYzm(){
+    $('#yanzheng').attr('src', 'captcha.jpg?' + new Date());
+}
+
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--1:扫描控制器里的包-->
+    <context:component-scan base-package="com.qfedu.controller"></context:component-scan>
+
+    <!--1：命名，消费者名称-->
+    <dubbo:application name="msgconsumer"></dubbo:application>
+    <!--2：注册中心-->
+    <dubbo:registry address="39.104.164.135:2181" protocol="zookeeper"></dubbo:registry>
+    <!--3：获取服务接口-->
+    <dubbo:reference interface="com.qfedu.service.PhoneMsgService" id="phoneMsgProvider" version="1.0"></dubbo:reference>
+
+
+
+    <!--设置AOP来加载日志-->
+    <bean id="logAdvice" class="com.qfedu.core.log.LogAdvice"></bean>
+    <aop:config>
+        <aop:pointcut id="ct" expression="execution(* com.qfedu.controller.*.*(..))"></aop:pointcut>
+        <aop:aspect id="apt" ref="logAdvice">
+            <aop:around method="weriteLog" pointcut-ref="ct"></aop:around>
+        </aop:aspect>
+    </aop:config>
+
+    <!--2:加载注解驱动-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--放行静态资源-->
+    <mvc:default-servlet-handler/>
+
+</beans>

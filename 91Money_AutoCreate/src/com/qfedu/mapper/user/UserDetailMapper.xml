@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.mapper.user.UserDetailMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="idNumber" jdbcType="VARCHAR" property="idnumber" />
+    <result column="birthDate" jdbcType="DATE" property="birthdate" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qfedu.domain.user.UserDetailWithBLOBs">
+    <result column="address" jdbcType="LONGVARCHAR" property="address" />
+    <result column="idimage1" jdbcType="LONGVARCHAR" property="idimage1" />
+    <result column="idimage2" jdbcType="LONGVARCHAR" property="idimage2" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, realname, sex, idNumber, birthDate, createtime, flag
+  </sql>
+  <sql id="Blob_Column_List">
+    address, idimage1, idimage2
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.qfedu.domain.user.UserDetailExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.qfedu.domain.user.UserDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qfedu.domain.user.UserDetailExample">
+    delete from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.domain.user.UserDetailWithBLOBs">
+    insert into t_userdetail (id, uid, realname, 
+      sex, idNumber, birthDate, 
+      createtime, flag, address, 
+      idimage1, idimage2)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR}, #{birthdate,jdbcType=DATE}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}, #{address,jdbcType=LONGVARCHAR}, 
+      #{idimage1,jdbcType=LONGVARCHAR}, #{idimage2,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.domain.user.UserDetailWithBLOBs">
+    insert into t_userdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="idnumber != null">
+        idNumber,
+      </if>
+      <if test="birthdate != null">
+        birthDate,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="idimage1 != null">
+        idimage1,
+      </if>
+      <if test="idimage2 != null">
+        idimage2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null">
+        #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="idimage1 != null">
+        #{idimage1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="idimage2 != null">
+        #{idimage2,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qfedu.domain.user.UserDetailExample" resultType="java.lang.Long">
+    select count(*) from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_userdetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idnumber != null">
+        idNumber = #{record.idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdate != null">
+        birthDate = #{record.birthdate,jdbcType=DATE},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.idimage1 != null">
+        idimage1 = #{record.idimage1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.idimage2 != null">
+        idimage2 = #{record.idimage2,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_userdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      idNumber = #{record.idnumber,jdbcType=VARCHAR},
+      birthDate = #{record.birthdate,jdbcType=DATE},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=LONGVARCHAR},
+      idimage1 = #{record.idimage1,jdbcType=LONGVARCHAR},
+      idimage2 = #{record.idimage2,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_userdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      idNumber = #{record.idnumber,jdbcType=VARCHAR},
+      birthDate = #{record.birthdate,jdbcType=DATE},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="createtime" jdbcType="DATE" property="createtime" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail">
+    <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, flag, name, img, sex, phone, role, createtime, uid
+  </sql>
+  <sql id="Blob_Column_List">
+    introduce
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.qfedu.domain.user.UserDetailExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.qfedu.domain.user.UserDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qfedu.domain.user.UserDetailExample">
+    delete from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail">
+    insert into t_userdetail (id, flag, name, 
+      img, sex, phone, role, 
+      createtime, uid, introduce
+      )
+    values (#{id,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=DATE}, #{uid,jdbcType=INTEGER}, #{introduce,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.domain.user.com.qfedu.domain.userdetail.UserDetail">
+    insert into t_userdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qfedu.domain.user.UserDetailExample" resultType="java.lang.Long">
+    select count(*) from t_userdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_userdetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img != null">
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_userdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      flag = #{record.flag,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=DATE},
+      uid = #{record.uid,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_userdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      flag = #{record.flag,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=DATE},
+      uid = #{record.uid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
